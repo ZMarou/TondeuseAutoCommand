@@ -4,12 +4,11 @@
     Welcome to {{ title }}!
   </h1>
 
-  <ul>
-    <li routerLink="">Home</li>
-    <li routerLink="/about">About</li>
-  </ul>
-</div>
+  <nav class="navbar navbar-inverse bg-inverse bg-faded">
+    <a class="navbar-brand" routerLink="">Home</a>
+    <a class="navbar-brand" routerLink="about">about</a>
+  </nav>
 
-<app-home></app-home>
+</div>
 
 <router-outlet></router-outlet>

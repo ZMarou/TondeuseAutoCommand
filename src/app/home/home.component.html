@@ -1,3 +1,59 @@
-<p>
-  home works!
-</p>
+<div class="container">
+  <fieldset>
+    <legend>Définir Terrain</legend>
+    <div class="row">
+      <label class="col-sm-2" for="nbrRowInput">Saisir le nombre de ligne :</label>
+      <input type="text" (change)="onChange($event)" [(ngModel)]="nbrRow" id="nbrRowInput" class="col-sm-10" />
+    </div>
+    <div class="row">
+      <label class="col-sm-2" for="nbrColInput">Saisir le nombre de colonne :</label>
+      <input type="text" (change)="onChange($event)" [(ngModel)]="nbrCol" id="nbrColInput" class="col-sm-10" />
+    </div>
+  </fieldset>
+  <br>
+  <form #tondeuseForm="ngForm">
+    <fieldset>
+      <legend>Ajouter Tondeuse</legend>
+      <div class="form-group">
+        <label for="posXInput">Position X :</label>
+        <input type="number" step="1" min="0" max="100" pattern="^[0-9][0-9]?$" class="form-control" id="posXInput" required [(ngModel)]="currentTondeuse.posX"
+          name="posX" #posX="ngModel">
+        <div [hidden]="posX.valid || posX.pristine" class="alert alert-danger">
+          <strong>Error in Postion X</strong>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="posYInput">Position Y :</label>
+        <input type="number" step="1" min="0" max="100" pattern="^[0-9][0-9]?$" class="form-control" id="posYInput" required [(ngModel)]="currentTondeuse.posY"
+          name="posY" #posY="ngModel">
+        <div [hidden]="posX.valid || posX.pristine" class="alert alert-danger">
+          <strong>Error in Postion Y</strong>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="colorSelect">Couleur :</label>
+        <select class="form-control" id="colorSelect" required [(ngModel)]="currentTondeuse.color" name="color" #color="ngModel">
+          <option>red</option>
+          <option>yellow</option>
+          <option>blue</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success" (click)="ajouterTondeuse(); tondeuseForm.reset();" [disabled]="!tondeuseForm.form.valid">Ajouter</button>
+    </fieldset>
+  </form>
+  <br>
+  <div>
+    <fieldset>
+      <legend>Résultat</legend>
+      <table class="table">
+        <tbody>
+          <tr *ngFor="let row of rowsArray">
+            <td class="terrain" *ngFor="let col of colsArray">
+              <!-- <i class="fa fa-car tondeuse"  [ngStyle]="{'display': tondeusesArray[col][row] !== undefined}"></i> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+</div>
