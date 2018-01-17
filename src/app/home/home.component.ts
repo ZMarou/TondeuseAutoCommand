@@ -34,24 +34,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.nbrRow = 5;
     this.nbrCol = 5;
-    this.rowsArray = new Array();
-    this.colsArray = new Array();
-    this.tondeusesArray = new Array();
-    this.errorArray = new Array();
     this.currentTondeuse = new Tondeuse(0, 0, 'red');
-    for (var _i = 1; _i <= this.nbrRow; _i++) {
-      this.rowsArray.push(_i);
-    }
-    for (var _i = 1; _i <= this.nbrCol; _i++) {
-      this.colsArray.push(_i);
-    }
-    this.terrain = new Array();
-    for (var _i = 0; _i < this.nbrRow; _i++) {
-      this.terrain[_i] = new Array();
-      for (var _j = 0; _j < this.nbrCol; _j++) {
-        this.terrain[_i][_j] = 0;
-      }
-    }
+    this.initTerrain();
     console.log(this.terrain);
   }
 
@@ -60,37 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   resizeTab() {
-    if (this.nbrCol > this.colsArray.length) {
-      var newItem = this.nbrCol - this.colsArray.length;
-      for (var _i = 0; _i < newItem; _i++) {
-        this.colsArray.push(this.colsArray.length + 1);
-      }
-    } else if (this.nbrCol < this.colsArray.length) {
-      var newItem = this.colsArray.length - this.nbrCol;
-      for (var _i = 0; _i < newItem; _i++) {
-        this.colsArray.pop();
-      }
-    }
-    if (this.nbrRow > this.rowsArray.length) {
-      var newItem = this.nbrRow - this.rowsArray.length;
-      for (var _i = 0; _i < newItem; _i++) {
-        this.rowsArray.push(this.rowsArray.length + 1);
-      }
-    } else if (this.nbrRow < this.rowsArray.length) {
-      var newItem = this.rowsArray.length - this.nbrRow;
-      for (var _i = 0; _i < newItem; _i++) {
-        this.rowsArray.pop();
-      }
-    }
-    this.terrain = new Array();
-    for (var _i = 0; _i < this.nbrRow; _i++) {
-      this.terrain[_i] = new Array();
-      for (var _j = 0; _j < this.nbrCol; _j++) {
-        this.terrain[_i][_j] = 0;
-      }
-    }
-    this.tondeusesArray = new Array();
-    this.errorArray = new Array();
+    this.initTerrain();
   }
 
   ajouterTondeuse() {
@@ -104,14 +58,24 @@ export class HomeComponent implements OnInit {
     console.log(this.terrain);
   }
 
-  verifierTondeuse(row, col) {
-    this.tondeusesArray.forEach(element => {
-      if (element.posX == col && element.posY == row) {
-        this.displayedTondeuse = element;
-        return true;
+  initTerrain(){
+    this.rowsArray = new Array();
+    this.colsArray = new Array();
+    this.tondeusesArray = new Array();
+    this.errorArray = new Array();
+    for (var _i = 0; _i < this.nbrRow; _i++) {
+      this.rowsArray.push(_i);
+    }
+    for (var _i = 0; _i < this.nbrCol; _i++) {
+      this.colsArray.push(_i);
+    }
+    this.terrain = new Array();
+    for (var _i = 0; _i < this.nbrRow; _i++) {
+      this.terrain[_i] = new Array();
+      for (var _j = 0; _j < this.nbrCol; _j++) {
+        this.terrain[_i][_j] = 0;
       }
-    });
-    return false;
+    }
   }
 
 
