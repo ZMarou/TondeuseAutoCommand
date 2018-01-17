@@ -49,11 +49,21 @@
         <tbody>
           <tr *ngFor="let row of rowsArray">
             <td class="terrain" *ngFor="let col of colsArray">
-              <!-- <i class="fa fa-car tondeuse"  [ngStyle]="{'display': tondeusesArray[col][row] !== undefined}"></i> -->
+              <!-- <i class="fa fa-car tondeuse"  [ngStyle]="{'display': terrain[col][row] === 1 ? true : false }"></i>
+              {{terrain[col][row] === 1}} -->
             </td>
           </tr>
         </tbody>
       </table>
+    </fieldset>
+  </div>
+  <br>
+  <div>
+    <fieldset>
+      <legend>Les tondeuses hors périmetres :</legend>
+      <ul>
+        <li *ngFor="let item of errorArray">{{item | json}}</li>
+      </ul>
     </fieldset>
   </div>
 </div>

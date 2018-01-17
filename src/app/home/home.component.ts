@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   currentTondeuse: Tondeuse;
   displayedTondeuse: Tondeuse;
   tondeusesArray: Tondeuse[];
+  errorArray: Tondeuse[];
   terrain;
 
   constructor() {
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
     this.rowsArray = new Array();
     this.colsArray = new Array();
     this.tondeusesArray = new Array();
+    this.errorArray = new Array();
     this.currentTondeuse = new Tondeuse(0, 0, 'red');
     for (var _i = 1; _i <= this.nbrRow; _i++) {
       this.rowsArray.push(_i);
@@ -43,13 +45,14 @@ export class HomeComponent implements OnInit {
     for (var _i = 1; _i <= this.nbrCol; _i++) {
       this.colsArray.push(_i);
     }
-    // this.terrain = new Array();
-    // for (var _i = 0; _i < this.nbrRow; _i++) {
-    //   this.terrain[_i] = new Array();
-    //   for (var _j = 0; _j < this.nbrCol; _j++) {
-    //     this.terrain[_i].push(new Terrain(false, 'red'));
-    //   }
-    // }
+    this.terrain = new Array();
+    for (var _i = 0; _i < this.nbrRow; _i++) {
+      this.terrain[_i] = new Array();
+      for (var _j = 0; _j < this.nbrCol; _j++) {
+        this.terrain[_i][_j] = 0;
+      }
+    }
+    console.log(this.terrain);
   }
 
   onChange($event) {
@@ -79,19 +82,26 @@ export class HomeComponent implements OnInit {
         this.rowsArray.pop();
       }
     }
-    // this.terrain = new Array();
-    // for (var _i = 0; _i < this.nbrRow; _i++) {
-    //   this.terrain[_i] = new Array();
-    //   for (var _j = 1; _j < this.nbrCol; _j++) {
-    //     this.terrain[_i][_j] = new Terrain(false, 'red');
-    //   }
-    // }
+    this.terrain = new Array();
+    for (var _i = 0; _i < this.nbrRow; _i++) {
+      this.terrain[_i] = new Array();
+      for (var _j = 0; _j < this.nbrCol; _j++) {
+        this.terrain[_i][_j] = 0;
+      }
+    }
+    this.tondeusesArray = new Array();
+    this.errorArray = new Array();
   }
 
   ajouterTondeuse() {
-    this.tondeusesArray.push(this.currentTondeuse);
+    if (this.currentTondeuse.posX + 1 > this.nbrCol || this.currentTondeuse.posY + 1 > this.nbrRow) {
+      this.errorArray.push(this.currentTondeuse);
+    } else {
+      this.tondeusesArray.push(this.currentTondeuse);
+      this.terrain[this.currentTondeuse.posX][this.currentTondeuse.posY] = 1;
+    }
     this.currentTondeuse = new Tondeuse(0, 0, 'red');
-    console.log(this.tondeusesArray);
+    console.log(this.terrain);
   }
 
   verifierTondeuse(row, col) {
