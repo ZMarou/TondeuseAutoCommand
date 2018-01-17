@@ -6,10 +6,8 @@ import 'rxjs/add/operator/toArray';
 import 'rxjs/Rx';
 import { range } from 'rxjs/observable/range';
 import { flatMap } from 'rxjs/operators';
-import { Tondeuse } from './tondeuse';
+import { Tondeuse, Color } from './tondeuse';
 import { forEach } from '@angular/router/src/utils/collection';
-import { Terrain } from './terrain';
-
 
 @Component({
   selector: 'app-home',
@@ -26,7 +24,9 @@ export class HomeComponent implements OnInit {
   displayedTondeuse: Tondeuse;
   tondeusesArray: Tondeuse[];
   errorArray: Tondeuse[];
-  terrain;
+  terrain; 
+  colorMatrice;
+  colorEnum : Color;
 
   constructor() {
   }
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.nbrRow = 5;
     this.nbrCol = 5;
-    this.currentTondeuse = new Tondeuse(0, 0, 'red');
+    this.currentTondeuse = new Tondeuse(0, 0, Color.Red);
     this.initTerrain();
     console.log(this.terrain);
   }
@@ -53,9 +53,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.tondeusesArray.push(this.currentTondeuse);
       this.terrain[this.currentTondeuse.posX][this.currentTondeuse.posY] = 1;
+      this.colorMatrice[this.currentTondeuse.posX][this.currentTondeuse.posY] = this.currentTondeuse.color;
     }
-    this.currentTondeuse = new Tondeuse(0, 0, 'red');
-    console.log(this.terrain);
+    this.currentTondeuse = new Tondeuse(0, 0, Color.Red);
+    console.log(this.colorMatrice);
   }
 
   initTerrain(){
@@ -74,6 +75,13 @@ export class HomeComponent implements OnInit {
       this.terrain[_i] = new Array();
       for (var _j = 0; _j < this.nbrCol; _j++) {
         this.terrain[_i][_j] = 0;
+      }
+    }
+    this.colorMatrice = new Array();
+    for (var _i = 0; _i < this.nbrRow; _i++) {
+      this.colorMatrice[_i] = new Array();
+      for (var _j = 0; _j < this.nbrCol; _j++) {
+        this.colorMatrice[_i][_j] = '';
       }
     }
   }

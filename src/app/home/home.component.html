@@ -36,6 +36,7 @@
           <option>red</option>
           <option>yellow</option>
           <option>blue</option>
+          <option>pink</option>
         </select>
       </div>
       <button type="submit" class="btn btn-success" (click)="ajouterTondeuse(); tondeuseForm.reset();" [disabled]="!tondeuseForm.form.valid">Ajouter</button>
@@ -49,8 +50,7 @@
         <tbody>
           <tr *ngFor="let row of rowsArray">
             <td class="terrain" *ngFor="let col of colsArray">
-              <i class="fa fa-car tondeuse"></i>
-              {{terrain[col][row] === 1}}
+              <i class="fa fa-tree tondeuse"  [ngStyle]="{'display': terrain[col][row] === 1 ? 'block' : 'none', 'color': colorMatrice[col][row]}"></i>
             </td>
           </tr>
         </tbody>
@@ -62,7 +62,7 @@
     <fieldset>
       <legend>Les tondeuses hors périmetres :</legend>
       <ul>
-        <li *ngFor="let item of errorArray">{{item | json}}</li>
+        <li *ngFor="let item of errorArray">Tondeuse : {{item | json}}</li>
       </ul>
     </fieldset>
   </div>

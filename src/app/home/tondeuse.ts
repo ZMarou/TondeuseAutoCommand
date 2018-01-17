@@ -5,3 +5,11 @@ export class Tondeuse {
         public color: string
     ) { }
 }
+
+
+export enum Color {
+    Red = 'red',
+    Yellow = 'yellow',
+    Blue = 'blue',
+    Pink = 'pink',
+}
