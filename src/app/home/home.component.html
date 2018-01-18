@@ -2,12 +2,14 @@
   <fieldset>
     <legend>Définir Terrain</legend>
     <div class="row">
-      <label class="col-sm-2" for="nbrRowInput">Saisir le nombre de ligne :</label>
-      <input type="text" (change)="onChange($event)" [(ngModel)]="nbrRow" id="nbrRowInput" class="col-sm-10" />
+      <label class="col-sm-3" for="nbrColInput">Saisir le nombre de colonne :</label>
+      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrCol" id="nbrColInput" class="col-sm-1" />
+      <div class="col-sm-8"></div>
     </div>
     <div class="row">
-      <label class="col-sm-2" for="nbrColInput">Saisir le nombre de colonne :</label>
-      <input type="text" (change)="onChange($event)" [(ngModel)]="nbrCol" id="nbrColInput" class="col-sm-10" />
+      <label class="col-sm-3" for="nbrRowInput">Saisir le nombre de ligne :</label>
+      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrRow" id="nbrRowInput" class="col-sm-1" />
+      <div class="col-sm-8"></div>
     </div>
   </fieldset>
   <br>
@@ -26,7 +28,7 @@
         <label for="posYInput">Position Y :</label>
         <input type="number" step="1" min="0" max="100" pattern="^[0-9][0-9]?$" class="form-control" id="posYInput" required [(ngModel)]="currentTondeuse.posY"
           name="posY" #posY="ngModel">
-        <div [hidden]="posX.valid || posX.pristine" class="alert alert-danger">
+        <div [hidden]="posY.valid || posY.pristine" class="alert alert-danger">
           <strong>Error in Postion Y</strong>
         </div>
       </div>

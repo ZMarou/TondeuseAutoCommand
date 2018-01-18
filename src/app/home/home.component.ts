@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toArray';
 import 'rxjs/Rx';
 import { range } from 'rxjs/observable/range';
 import { flatMap } from 'rxjs/operators';
-import { Tondeuse, Color } from './tondeuse';
+import { Tondeuse } from './tondeuse';
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
@@ -26,17 +26,14 @@ export class HomeComponent implements OnInit {
   errorArray: Tondeuse[];
   terrain; 
   colorMatrice;
-  colorEnum : Color;
 
   constructor() {
   }
 
   ngOnInit() {
     this.nbrRow = 5;
-    this.nbrCol = 5;
-    this.currentTondeuse = new Tondeuse(0, 0, Color.Red);
+    this.nbrCol = 3;
     this.initTerrain();
-    console.log(this.terrain);
   }
 
   onChange($event) {
@@ -55,11 +52,11 @@ export class HomeComponent implements OnInit {
       this.terrain[this.currentTondeuse.posX][this.currentTondeuse.posY] = 1;
       this.colorMatrice[this.currentTondeuse.posX][this.currentTondeuse.posY] = this.currentTondeuse.color;
     }
-    this.currentTondeuse = new Tondeuse(0, 0, Color.Red);
-    console.log(this.colorMatrice);
+    this.currentTondeuse = new Tondeuse(0, 0, 'red');
   }
 
   initTerrain(){
+    this.currentTondeuse = new Tondeuse(0, 0, 'red');
     this.rowsArray = new Array();
     this.colsArray = new Array();
     this.tondeusesArray = new Array();
@@ -71,19 +68,21 @@ export class HomeComponent implements OnInit {
       this.colsArray.push(_i);
     }
     this.terrain = new Array();
-    for (var _i = 0; _i < this.nbrRow; _i++) {
+    for (var _i = 0; _i < this.nbrCol; _i++) {
       this.terrain[_i] = new Array();
-      for (var _j = 0; _j < this.nbrCol; _j++) {
+      for (var _j = 0; _j < this.nbrRow; _j++) {
         this.terrain[_i][_j] = 0;
       }
     }
     this.colorMatrice = new Array();
-    for (var _i = 0; _i < this.nbrRow; _i++) {
+    for (var _i = 0; _i < this.nbrCol; _i++) {
       this.colorMatrice[_i] = new Array();
-      for (var _j = 0; _j < this.nbrCol; _j++) {
+      for (var _j = 0; _j < this.nbrRow; _j++) {
         this.colorMatrice[_i][_j] = '';
       }
     }
+    console.log(this.colorMatrice);
+    console.log(this.terrain)
   }
 
 
