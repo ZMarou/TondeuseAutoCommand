@@ -1,21 +1,23 @@
 <div class="container">
   <fieldset>
-    <legend>Définir Terrain</legend>
+    <legend>1- Définir Terrain</legend>
     <div class="row">
       <label class="col-sm-3" for="nbrColInput">Saisir le nombre de colonne :</label>
-      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrCol" id="nbrColInput" class="col-sm-1" />
+      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrCol" id="nbrColInput" class="col-sm-1"
+      />
       <div class="col-sm-8"></div>
     </div>
     <div class="row">
       <label class="col-sm-3" for="nbrRowInput">Saisir le nombre de ligne :</label>
-      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrRow" id="nbrRowInput" class="col-sm-1" />
+      <input type="number" step="1" min="0" max="100" (change)="onChange($event)" [(ngModel)]="nbrRow" id="nbrRowInput" class="col-sm-1"
+      />
       <div class="col-sm-8"></div>
     </div>
   </fieldset>
   <br>
   <form #tondeuseForm="ngForm">
     <fieldset>
-      <legend>Ajouter Tondeuse</legend>
+      <legend>2- Ajouter Tondeuse</legend>
       <div class="form-group">
         <label for="posXInput">Position X :</label>
         <input type="number" step="1" min="0" max="100" pattern="^[0-9][0-9]?$" class="form-control" id="posXInput" required [(ngModel)]="currentTondeuse.posX"
@@ -45,14 +47,43 @@
     </fieldset>
   </form>
   <br>
+  <fieldset>
+    <legend>3- Avancer Tondeuse</legend>
+    <div class="row">
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('left')">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('up')">
+          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('right')">
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('down')">
+          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+  <br>
   <div>
     <fieldset>
-      <legend>Résultat</legend>
+      <legend>4- Résultat</legend>
       <table class="table">
         <tbody>
           <tr *ngFor="let row of rowsArray">
             <td class="terrain" *ngFor="let col of colsArray">
-              <i class="fa fa-tree tondeuse"  [ngStyle]="{'display': terrain[col][row] === 1 ? 'block' : 'none', 'color': colorMatrice[col][row]}"></i>
+              <div [style.display]="terrain[col][row] !== 0 ? 'block' : 'none'">
+                <strong>{{terrain[col][row]}} - </strong>
+                <i class="fa fa-tree tondeuse" [ngStyle]="{'color': colorMatrice[col][row]}"></i>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -62,9 +93,9 @@
   <br>
   <div>
     <fieldset>
-      <legend>Les tondeuses hors périmetres :</legend>
+      <legend>5- Les tondeuses hors périmetres</legend>
       <ul>
-        <li *ngFor="let item of errorArray">Tondeuse : {{item | json}}</li>
+        <li *ngFor="let item of tondeusesArray" [style.display]=" item.erreur ? 'block' : 'none'">Tondeuse N° {{item.id}} : {{item | json}}</li>
       </ul>
     </fieldset>
   </div>

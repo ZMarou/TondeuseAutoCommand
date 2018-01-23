@@ -8,11 +8,13 @@ import { range } from 'rxjs/observable/range';
 import { flatMap } from 'rxjs/operators';
 import { Tondeuse } from './tondeuse';
 import { forEach } from '@angular/router/src/utils/collection';
+import { TondeuseService } from '../tondeuse.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers:[TondeuseService]
 })
 export class HomeComponent implements OnInit {
 
@@ -23,17 +25,16 @@ export class HomeComponent implements OnInit {
   currentTondeuse: Tondeuse;
   displayedTondeuse: Tondeuse;
   tondeusesArray: Tondeuse[];
-  errorArray: Tondeuse[];
   terrain; 
   colorMatrice;
 
-  constructor() {
+  constructor(private tondeuseService: TondeuseService) {
   }
 
   ngOnInit() {
     this.nbrRow = 5;
-    this.nbrCol = 3;
-    this.initTerrain();
+    this.nbrCol = 5;
+    this.init();
   }
 
   onChange($event) {
@@ -41,26 +42,25 @@ export class HomeComponent implements OnInit {
   }
 
   resizeTab() {
-    this.initTerrain();
+    this.init();
   }
 
   ajouterTondeuse() {
-    if (this.currentTondeuse.posX + 1 > this.nbrCol || this.currentTondeuse.posY + 1 > this.nbrRow) {
-      this.errorArray.push(this.currentTondeuse);
-    } else {
-      this.tondeusesArray.push(this.currentTondeuse);
-      this.terrain[this.currentTondeuse.posX][this.currentTondeuse.posY] = 1;
-      this.colorMatrice[this.currentTondeuse.posX][this.currentTondeuse.posY] = this.currentTondeuse.color;
-    }
-    this.currentTondeuse = new Tondeuse(0, 0, 'red');
+    this.currentTondeuse.id = this.tondeusesArray.length  + 1;
+    this.currentTondeuse = this.determinerTondeuseHorsPerimetre(this.currentTondeuse);
+    this.tondeusesArray.push(this.currentTondeuse);
+    this.currentTondeuse = new Tondeuse(1, 0, 0, 'red', false);
+  }
+
+  init(){
+    this.currentTondeuse = new Tondeuse(1, 0, 0, 'red', false);
+    this.tondeusesArray = new Array();
+    this.initTerrain()
   }
 
   initTerrain(){
-    this.currentTondeuse = new Tondeuse(0, 0, 'red');
     this.rowsArray = new Array();
     this.colsArray = new Array();
-    this.tondeusesArray = new Array();
-    this.errorArray = new Array();
     for (var _i = 0; _i < this.nbrRow; _i++) {
       this.rowsArray.push(_i);
     }
@@ -85,6 +85,25 @@ export class HomeComponent implements OnInit {
     console.log(this.terrain)
   }
 
+  avancer($event){
+    this.initTerrain();
+    this.tondeusesArray = this.tondeuseService.calculerParcours(this.nbrCol,this.nbrRow, this.tondeusesArray, $event);
+    console.log(this.tondeusesArray);
+    this.tondeusesArray.forEach(item => {
+      item = this.determinerTondeuseHorsPerimetre(item);
+    });
+  }
+
+  determinerTondeuseHorsPerimetre(tondeuse:Tondeuse){
+    if (tondeuse.posX + 1 > this.nbrCol || tondeuse.posY + 1 > this.nbrRow ||tondeuse.posX < 0 || tondeuse.posY < 0) {
+      tondeuse.erreur = true;
+    } else {
+      tondeuse.erreur = false;
+      this.terrain[tondeuse.posX][tondeuse.posY] = tondeuse.id;
+      this.colorMatrice[tondeuse.posX][tondeuse.posY] = tondeuse.color;
+    }
+    return tondeuse;
+  }
 
 
 
