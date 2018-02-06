@@ -25,10 +25,13 @@ export class HomeComponent implements OnInit {
   currentTondeuse: Tondeuse;
   displayedTondeuse: Tondeuse;
   tondeusesArray: Tondeuse[];
+  directions: string[];
   terrain; 
   colorMatrice;
+  selectedId: number;
 
   constructor(private tondeuseService: TondeuseService) {
+    this.directions = new Array();
   }
 
   ngOnInit() {
@@ -81,17 +84,24 @@ export class HomeComponent implements OnInit {
         this.colorMatrice[_i][_j] = '';
       }
     }
-    console.log(this.colorMatrice);
-    console.log(this.terrain)
   }
 
-  avancer($event){
+  /* avancer($event){
     this.initTerrain();
     this.tondeusesArray = this.tondeuseService.calculerParcours(this.nbrCol,this.nbrRow, this.tondeusesArray, $event);
     console.log(this.tondeusesArray);
     this.tondeusesArray.forEach(item => {
       item = this.determinerTondeuseHorsPerimetre(item);
     });
+  } */
+
+  defineDirection($event){
+    this.directions.push(this.tondeuseService.addDirection($event));
+  }
+
+
+  executeCommand($event){
+    console.log('hi '+this.selectedId);
   }
 
   determinerTondeuseHorsPerimetre(tondeuse:Tondeuse){

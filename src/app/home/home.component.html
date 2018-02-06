@@ -47,31 +47,50 @@
     </fieldset>
   </form>
   <br>
-  <fieldset>
-    <legend>3- Avancer Tondeuse</legend>
-    <div class="row">
-      <div class="col-sm-3">
-        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('left')">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+  <form #directionForm="ngForm">
+    <fieldset>
+      <legend>3- Avancer Tondeuse</legend>
+      <div class="row form-group">
+        <label class="col-sm-3" for="tondeuseId">Saisir numéro tondeuse :</label>
+        <div class="col-sm-2">
+          <select class="form-control" id="tondeuseId" required [(ngModel)]="selectedId" name="tondeuseId" #tondeuseId="ngModel">
+            <option *ngFor="let c of tondeusesArray" [ngValue]="c">{{c.id}}</option>
+          </select>
+          <div [hidden]=" tondeuseId.valid " class="alert alert-danger">
+            <strong>You need to set a value</strong>
+          </div>
+        </div>
+        <div class="col-sm-7"></div>
+      </div>
+      <br>
+      <div class="row form-group">
+        <div class="col-sm-4">
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="defineDirection('left')">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="defineDirection('up')">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="defineDirection('right')">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <span class="col-sm-8">{{ directions | commandLine}}</span>
+      </div>
+      <br>
+      <div class="row form-group ">
+        <button type="submit" class="btn btn-success btn-lg btn-block" (click)="executeCommand();directionForm.reset();" [disabled]="!directionForm.form.valid">
+          Exécuter
         </button>
       </div>
-      <div class="col-sm-3">
-        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('up')">
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="col-sm-3">
-        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('right')">
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="col-sm-3">
-        <button type="button" class="btn btn-lg btn-secondary btn-block" (click)="avancer('down')">
-          <i class="fa fa-arrow-down" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-  </fieldset>
+    </fieldset>
+  </form>
   <br>
   <div>
     <fieldset>

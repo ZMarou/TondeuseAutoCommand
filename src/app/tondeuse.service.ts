@@ -7,7 +7,7 @@ export class TondeuseService {
 
   constructor() { }
 
-  calculerParcours(nbrCol:number, nbrRow:number, tondeuses:Tondeuse[], direction:string){
+  /*calculerParcours(nbrCol:number, nbrRow:number, tondeuses:Tondeuse[], direction:string){
     tondeuses.forEach(item => {
       if(direction === 'left'){
         item.posX--;
@@ -20,6 +20,16 @@ export class TondeuseService {
       }
     });
     return tondeuses;
+  }*/
+
+  addDirection(direction:string){
+    if(direction === 'left'){
+      return 'G';
+    }else if(direction === 'up'){
+      return 'A';
+    }else {
+      return 'D';
+    }
   }
 
 }
